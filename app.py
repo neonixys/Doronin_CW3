@@ -7,7 +7,7 @@ from blueprints.api.api import api
 from blueprints.errors.views import error_blueprint
 
 app = Flask(__name__)
-app.config['JSON_AS_ASCII'] = False
+app.config['json.ensure_ascii'] = False
 
 
 # Регистрируем юлюпринты

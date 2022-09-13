@@ -1,31 +1,25 @@
 import json
 
-import data
-
 
 def get_posts_all():
     """Функция возвращает посты"""
     with open("data/posts.json", "r", encoding="utf8") as json_file:
-       return json.load(json_file)
+        return json.load(json_file)
 
-#print(get_posts_all())
 
 def get_posts_by_user(user_name):
     """Функция возвращает посты определенного пользователя"""
     posts = get_posts_all()
     user_posts = []
-
+    flag = False
     for post in posts:
-
-        if post['poster_name'] == user_name:
+        if user_name.lower() in post["poster_name"].lower():
             user_posts.append(post)
+            flag = True
+            if not flag:
+                raise ValueError('Нет такого пользователя')
     return user_posts
-        # elif user_name == " ":
-        #     return []
-        # else:
-        #     return ValueError
 
-#print(get_posts_by_user("fdf"))
 
 def get_comments_by_post_id(post_id):
     """Функция возвращает комментарии определенного поста"""
@@ -38,14 +32,13 @@ def get_comments_by_post_id(post_id):
 
     return posts_comments
 
-#print(get_comments_by_post_id("здорово"))
 
 def get_comments_all():
     """Функция возвращает список комментариев"""
     with open('data/comments.json', 'r', encoding='utf-8') as file:
         list_of_posts = json.load(file)
         return list_of_posts
-#print(get_comments_all())
+
 
 def search_for_posts(query):
     """Функция возвращает список постов по ключевому слову"""
@@ -60,7 +53,6 @@ def search_for_posts(query):
             continue
     return search_list
 
-#print(search_for_posts("Квадратная"))
 
 def get_post_by_pk(pk_post):
     """Функция возвращает один пост по его идентификатору"""
@@ -69,4 +61,3 @@ def get_post_by_pk(pk_post):
     for post in dict_list:
         if pk_post == post['pk']:
             return post
-#print(get_post_by_pk(6))
